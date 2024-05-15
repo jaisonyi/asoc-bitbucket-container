@@ -1,5 +1,6 @@
 # Bitbucket Pipe for HCL AppScan on Cloud Static Analysis
 This repo contains windows/linux docker image that uses python to download the SAClientUtil from HCL AppScan on Cloud and run static analysis against an application in Bitbucket pipelines. The script also will wait for the scan to complete and download a scan summary json file and a scan report. These files are all placed in a directory "reports" so they can be saved as artifacts of the pipeline. See the bitbucket-pipelines.yml example below. Most builds can happen on the linux image, but some projects, like .NET projects must be built on windows.
+[NOTE] this repo is the duplicated repo of "https://github.com/HCL-TECH-SOFTWARE/bitbucket-asoc-sast.git" contribute by cwtravis and others.  I tried to update some information for someone who is not familiar with this kind of integration task, but I was not able to update the repo.  So.. I duplicated the original repo and update some information to help someone who want to use ASoC with Bitbucket for SAST.  
 
 ### Variables
 
