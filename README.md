@@ -20,10 +20,13 @@ The pipe has 11 variables.
 | DEBUG | Optional | If true, prints additional debug info to the log. |
 
 **Note about specifying a config file. Providing a config file can override other settings like `TARGET_DIR` or `SECRET_SCANNING`
+to do this, you need to have an signed up ASoC instance and able to access the ASoC.  You can find datacenter information from the where you select the datacenter when you activate your subscription.  Do not forget to get the API Key and Key secret which is tied with your account.  Also, getting application ID is important.  Capture those information to somewhere you can keep it for the demonstration or preparing to integrate with Bitbucket. 
 
 ### Example bitbucket-pipelines.yml step
 
 The following is the bitbucket-pipelines.yml file from my demo repository that makes use of this custom pipe.
+First step is about the build a project, and it will drop an artifact.
+Second step is getting docker and execute the script to get SAST CLI Util and use the variable you have set to create a scan at the ASoC, and get the report. If the scan is completed, you can find report pack from the artifacts.  
 
 ```yaml
 image: gradle:6.6.0
@@ -46,7 +49,7 @@ pipelines:
         name: ASoC SAST Scan
         script:
           # Custom Pipe to run Static Analysis via HCL AppScan on Cloud
-          # View README: https://github.com/cwtravis/bitbucket-asoc-sast
+          # View README: https://github.com/jaisonyi/asoc-bitbucket-container
           - pipe: docker://cwtravis1/bitbucket_asoc_sast:test
             variables:
               # Required Variables
@@ -68,13 +71,14 @@ pipelines:
 
 ### Building The Image
 
-Feel free to use my docker images just as shown in the example pipeline above. You can also use the following commands to build your own images and push to your dockerhub. Replace `<YOUR_DOCKERHUB>` with your dockerhub username.
+Feel free to use my docker images just as shown in the example pipeline above. You can also use the following commands to build your own images and push to your dockerhub. Replace `<YOUR_DOCKERHUB>` with your dockerhub username. beofre you tag and push, you need to login to the dockerhub you are going to push the image.  you can create your docker repo from hub.docker.com.  Keep your account and credential to the task you are going to do.  You can use the docker location on the script which is created by original contributor of this document.  
 
 Build and Push the Linux Image:
 ```shell
 git clone https://github.com/cwtravis/bitbucket-asoc-sast.git
 cd bitbucket-asoc-sast/linux
 docker build -t asoc_sast_linux .
+docker login
 docker tag asoc_sast_linux <YOUR_DOCKERHUB>/bitbucket_asoc_sast:linux
 docker push <YOUR_DOCKERHUB>/bitbucket_asoc_sast:linux
 ```
