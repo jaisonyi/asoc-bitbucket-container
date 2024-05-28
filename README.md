@@ -52,7 +52,7 @@ pipelines:
         script:
           # Custom Pipe to run Static Analysis via HCL AppScan on Cloud
           # View README: https://github.com/jaisonyi/asoc-bitbucket-container
-          - pipe: docker://cwtravis1/bitbucket_asoc_sast:test
+          - pipe: docker://jaisonyi/bitbucket_asoc_sast:linux
             variables:
               # Required Variables
               API_KEY_ID: $API_KEY_ID
@@ -77,11 +77,11 @@ Feel free to use my docker images just as shown in the example pipeline above. Y
 
 Build and Push the Linux Image:
 ```shell
-git clone https://github.com/cwtravis/bitbucket-asoc-sast.git
-cd bitbucket-asoc-sast/linux
-docker build -t asoc_sast_linux .
+git clone https://github.com/jaisonyi/asoc-bitbucket-container.git
+cd asoc-bitbucket-container/linux
+docker build -t bitbucket_asoc_sast .
 docker login
-docker tag asoc_sast_linux <YOUR_DOCKERHUB>/bitbucket_asoc_sast:linux
+docker tag bitbucket_asoc_sast <YOUR_DOCKERHUB>/bitbucket_asoc_sast:linux
 docker push <YOUR_DOCKERHUB>/bitbucket_asoc_sast:linux
 ```
 
